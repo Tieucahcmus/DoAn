@@ -11,7 +11,7 @@
         <Label Content="Select Type" FontSize="15"  Margin="571,20,32,307"/>
         <ComboBox Name="cbbtype" Margin="576,55,29,335"/>
         <Label Content="View Product" FontSize="20" Margin="10,10,617,370"></Label>
-        <ListView Name="LV_product"  Margin="10,55,221,82"/>
+        <ListView Name="listview_product"  Margin="10,55,221,82"/>
         <Button Content="Import" Name="btnImport" Click="BtnImport_Click" Margin="482,343,221,48" ></Button>
         <StatusBar Margin="0,377,0,0" Grid.ColumnSpan="2">
             <Button Content="Prev" Width="53"></Button>

@@ -18,15 +18,12 @@ using System.IO;
 
 namespace DoAn
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
         /// <summary>
         /// khai báo DBEntities
         /// </summary>
-
         public storeDBEntities db = new storeDBEntities();
 
         public MainWindow()
@@ -52,11 +49,11 @@ namespace DoAn
                 var folder = info.Directory;
                 int sheet_index = 0;
                 var sheet = workbook.Worksheets[sheet_index];
-                var Start_column = 'A';
-                var Start_row = 3;
-                var cell = sheet.Cells[$"{Start_column}{Start_row}"];
-
-                List<string> list_catName = new List<string>();
+                var column = 'B';
+                var row = 2;
+                var temp_id = 1;
+                var cell = sheet.Cells[$"{column}{row}"];
+                var _list = new List<product>();
                 try
                 {
                     while (sheet != null)
@@ -66,29 +63,42 @@ namespace DoAn
                             name = sheet.Name.ToString()
                         };
                         db.categories.Add(_category);
-                        list_catName.Add(sheet.Name.ToString());
                         db.SaveChanges();
                         sheet_index++;
-                        sheet = workbook.Worksheets[sheet_index];
-
-                        var _name = sheet.Cells[$"B{Start_row}"].StringValue;
-                        var _price = sheet.Cells[$"C{Start_row}"].StringValue;
-                        var _quantity = sheet.Cells[$"D{Start_row}"].StringValue;
-                        var _img = sheet.Cells[$"E{Start_row}"].StringValue;
-                        var _product = new product()
-                        {
-                            catid = sheet_index,
-                            name = _name,
-                            quantity = Int32.Parse(_quantity),
-                            price = Int32.Parse(_price)
-                        };
-                        Start_row++;
+                        sheet = workbook.Worksheets[sheet_index];                     
                     }
-
                 }
                 catch (Exception) { }
+              
                 cbbtype.ItemsSource = db.categories.Select(d => d.name).ToList();
             }
         }
     }
 }
+
+// try
+//                {
+//                    int id_temp = 1;
+//var row = 2;
+//var temp = sheet.Cells[$"B{row}"];
+//                        while (temp.Value != null)
+//                        {
+//                            var _name = sheet.Cells[$"B{row}"].StringValue;
+//var _price = sheet.Cells[$"C{row}"].StringValue;
+//var _quantity = sheet.Cells[$"D{row}"].StringValue;
+//var _img = sheet.Cells[$"E{row}"].StringValue;
+//var _product = new product()
+//{
+//    catid = id_temp,
+//    name = _name,
+//    quantity = Int32.Parse(_quantity),
+//    price = Int32.Parse(_price),
+//    img = _img
+//};
+//db.products.Add(_product);
+//                            db.SaveChanges();
+//                            row++;
+//                            id_temp++;
+//                        }
+//                }
+//                catch { }
