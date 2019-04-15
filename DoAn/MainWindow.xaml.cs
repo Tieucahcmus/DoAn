@@ -39,7 +39,6 @@ namespace DoAn
         private void BtnImport_Click(object sender, RoutedEventArgs e)
         {
             var screen = new OpenFileDialog();
-
             screen.Filter = "Excel file (*.xlsx)| *xlsx";
             if (screen.ShowDialog() == true)
             {
@@ -51,9 +50,7 @@ namespace DoAn
                 var sheet = workbook.Worksheets[sheet_index];
                 var column = 'B';
                 var row = 2;
-                var temp_id = 1;
                 var cell = sheet.Cells[$"{column}{row}"];
-                var _list = new List<product>();
                 try
                 {
                     while (sheet != null)
@@ -65,40 +62,59 @@ namespace DoAn
                         db.categories.Add(_category);
                         db.SaveChanges();
                         sheet_index++;
-                        sheet = workbook.Worksheets[sheet_index];                     
+                        sheet = workbook.Worksheets[sheet_index];
+
+
+                        //  xem lại
+                        //while (cell.Value != null)
+                        //{
+                        //    product _product = new product()
+                        //    {
+                        //        catid = sheet_index + 1,
+                        //        name = sheet.Cells[$"B{row}"].StringValue,
+                        //        price = Int32.Parse(sheet.Cells[$"C{row}"].StringValue),
+                        //        quantity = Int32.Parse(sheet.Cells[$"D{row}"].StringValue),
+                        //        img = sheet.Cells[$"E{row}"].StringValue
+                        //    };
+                        //    db.products.Add(_product);
+                        //    db.SaveChanges();
+                        //    row++;
+                        //    cell = sheet.Cells[$"{column}{row}"];                           
+                        //}
                     }
                 }
                 catch (Exception) { }
-              
                 cbbtype.ItemsSource = db.categories.Select(d => d.name).ToList();
             }
+        }
+
+        private void BtnNext_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
 
-// try
-//                {
-//                    int id_temp = 1;
+//int _id = 1;
+//var column = 'B';
 //var row = 2;
-//var temp = sheet.Cells[$"B{row}"];
-//                        while (temp.Value != null)
-//                        {
-//                            var _name = sheet.Cells[$"B{row}"].StringValue;
+//var cell = sheet.Cells[$"{column}{row}"];
+//                    while (cell.Value != null)
+//                    {
+//                        var _name = sheet.Cells[$"B{row}"].StringValue;
 //var _price = sheet.Cells[$"C{row}"].StringValue;
 //var _quantity = sheet.Cells[$"D{row}"].StringValue;
 //var _img = sheet.Cells[$"E{row}"].StringValue;
-//var _product = new product()
+
+//product _product = new product()
 //{
-//    catid = id_temp,
+//    catid = _id,
 //    name = _name,
 //    quantity = Int32.Parse(_quantity),
 //    price = Int32.Parse(_price),
 //    img = _img
 //};
 //db.products.Add(_product);
-//                            db.SaveChanges();
-//                            row++;
-//                            id_temp++;
-//                        }
-//                }
-//                catch { }
+//                        row++;
+//                        cell = sheet.Cells[$"{column}{row}"];
+//                    }

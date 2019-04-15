@@ -16,7 +16,7 @@
         <StatusBar Margin="0,377,0,0" Grid.ColumnSpan="2">
             <Button Content="Prev" Width="53"></Button>
             <Label Content="Page 1 of 10"></Label>
-            <Button Content="Next" Width="53"></Button>
+            <Button Content="Next" Width="53" Name="btnNext" Click="BtnNext_Click"></Button>
         </StatusBar>
     </Grid>
 </Window>
