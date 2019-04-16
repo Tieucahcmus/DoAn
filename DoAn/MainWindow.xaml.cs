@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Aspose.Cells;
 using System.IO;
+using System.Diagnostics;
 
 namespace DoAn
 {
@@ -48,10 +49,7 @@ namespace DoAn
                 var folder = info.Directory;
                 int sheet_index = 0;
                 var sheet = workbook.Worksheets[sheet_index];
-                var column = 'B';
-                var row = 2;
-                var cell = sheet.Cells[$"{column}{row}"];
-                int cat_id = 1;
+               
                 try
                 {
                     while (sheet != null)
@@ -63,34 +61,43 @@ namespace DoAn
                         db.categories.Add(_category);
                         db.SaveChanges();
 
-                        while (cell.Value != null)
+                        try
                         {
-                            var _catid = cat_id;
-                            var _name = sheet.Cells[$"B{row}"].StringValue;
-                            var _price = sheet.Cells[$"C{row}"].IntValue;
-                            var _quantity = sheet.Cells[$"D{row}"].IntValue;
-                            var _img = sheet.Cells[$"E{row}"].StringValue;
-                            product _product = new product()
-                            {                          
-                                catid = _catid,
-                                name = _name,
-                                price =_price,
-                                quantity = _quantity,
-                                img = _img
-                            };
-                            db.products.Add(_product);
-                            db.SaveChanges();
-                            row++;
-                            cell = sheet.Cells[$"{column}{row}"];
+                            var row = 2;
+                            var cell = sheet.Cells[$"B{row}"];
+                            int cat_id = 1;
+                            while (cell.Value != null)
+                            {
+                                var _catid = cat_id;
+                                var _name = sheet.Cells[$"B{row}"].StringValue;
+                                var _price = sheet.Cells[$"C{row}"].IntValue;
+                                var _quantity = sheet.Cells[$"D{row}"].IntValue;
+                                var _img = sheet.Cells[$"E{row}"].StringValue;
+                                product _product = new product()
+                                {
+                                    catid = _catid,
+                                    name = _name,
+                                    price = _price,
+                                    quantity = _quantity,
+                                    img = _img
+                                };
+                                db.products.Add(_product);
+                                db.SaveChanges();
+                                row++;
+                                cell = sheet.Cells[$"B{row}"];
+                                cat_id++;
+
+                                Debug.WriteLine("");
+                            }
                         }
+                        catch { }
+                        
                         sheet_index++;
                         sheet = workbook.Worksheets[sheet_index];
-                        cat_id++;
                     }
                 }
                 catch (Exception) { }
                 cbbtype.ItemsSource = db.categories.Select(d => d.name).ToList();
-                listview_product.ItemsSource = db.products.Select(d => d.name).ToList();
 
             }
         }
