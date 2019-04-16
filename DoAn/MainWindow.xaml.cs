@@ -39,6 +39,8 @@ namespace DoAn
 
         private void BtnImport_Click(object sender, RoutedEventArgs e)
         {
+            string currentFolder = AppDomain.CurrentDomain.BaseDirectory;
+            var baseFolder = currentFolder.Substring(0, currentFolder.Length - 1);
             var screen = new OpenFileDialog();
             screen.Filter = "Excel file (*.xlsx)| *xlsx";
             if (screen.ShowDialog() == true)
@@ -66,20 +68,31 @@ namespace DoAn
                         {
                             var row = 2;
                             var cell = sheet.Cells[$"B{row}"];
-                            while (cell.StringValue!=null )
+                            while (cell.Value!=null )
                             {
                                 var _catid = cat_id;
                                 var _name = sheet.Cells[$"B{row}"].StringValue;
                                 var _price = sheet.Cells[$"C{row}"].IntValue;
                                 var _quantity = sheet.Cells[$"D{row}"].IntValue;
                                 var _img = sheet.Cells[$"E{row}"].StringValue;
+                                var newName = "";
+                                try
+                                {
+                                    _img = folder + @"\img\" + _img;
+                                    var imgInfo = new FileInfo(_img);
+                                    newName = Guid.NewGuid() + "." + imgInfo.Extension;
+                                    imgInfo.CopyTo(baseFolder + @"\img\" + newName);
+                                }
+                                catch (Exception) { }
+                               
+
                                 product _product = new product()
                                 {
                                     catid = _catid,
                                     name = _name,
                                     price = _price,
                                     quantity = _quantity,
-                                    img = _img
+                                    img = newName
                                 };
                                 db.products.Add(_product);
                                 db.SaveChanges();
@@ -88,7 +101,7 @@ namespace DoAn
                                 Debug.WriteLine(cat_id);
                             }
                         }
-                        catch { }
+                        catch (Exception) { }
                         cat_id++;
                         sheet_index++;
                         sheet = workbook.Worksheets[sheet_index];
