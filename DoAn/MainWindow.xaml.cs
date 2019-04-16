@@ -30,6 +30,7 @@ namespace DoAn
         public MainWindow()
         {
             InitializeComponent();
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -41,8 +42,10 @@ namespace DoAn
         {
             string currentFolder = AppDomain.CurrentDomain.BaseDirectory;
             var baseFolder = currentFolder.Substring(0, currentFolder.Length - 1);
+
             var screen = new OpenFileDialog();
             screen.Filter = "Excel file (*.xlsx)| *xlsx";
+
             if (screen.ShowDialog() == true)
             {
                 var filename = screen.FileName;
@@ -52,7 +55,6 @@ namespace DoAn
                 int sheet_index = 0;
                 var sheet = workbook.Worksheets[sheet_index];
                 int cat_id = 1;
-
                 try
                 {
                     while (sheet != null)
@@ -63,7 +65,6 @@ namespace DoAn
                         };
                         db.categories.Add(_category);
                         db.SaveChanges();
-
                         try
                         {
                             var row = 2;
@@ -83,9 +84,7 @@ namespace DoAn
                                     newName = Guid.NewGuid() + "." + imgInfo.Extension;
                                     imgInfo.CopyTo(baseFolder + @"\img\" + newName);
                                 }
-                                catch (Exception) { }
-                               
-
+                                catch (Exception) { }                               
                                 product _product = new product()
                                 {
                                     catid = _catid,
@@ -98,7 +97,6 @@ namespace DoAn
                                 db.SaveChanges();
                                 row++;
                                 cell = sheet.Cells[$"B{row}"];
-                                Debug.WriteLine(cat_id);
                             }
                         }
                         catch (Exception) { }
@@ -115,9 +113,7 @@ namespace DoAn
 
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
-
-           
-
+            
         }
     }
 }
