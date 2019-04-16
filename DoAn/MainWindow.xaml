@@ -9,7 +9,49 @@
     <Window.Resources>
         <local:RelativeToAbsolutePathConverter x:Key="converter"/>
     </Window.Resources>
-    <Grid>
+    <DockPanel LastChildFill="True">
+        <Grid Width="400" DockPanel.Dock="Right">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <ListView Name="orderListView" Grid.Row="0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                        <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}"/>
+                        <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding Quantity}"/>
+                        <GridViewColumn Header="Total" DisplayMemberBinding="{Binding Total}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <StackPanel Grid.Row="1">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Tổng tiền: "/>
+                    <TextBlock Text=""></TextBlock>
+                </StackPanel>
+                <Button Content="Import" Name="btnImport" Click="BtnImport_Click" Width="100" Height="25"/>
+            </StackPanel>
+        </Grid>
+        <ListView Name="listview_product" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Width="150" Height="150" Background="White">
+                        <Image Source="{Binding img, Converter={StaticResource converter}}" Width="50" Height="50"/>
+                        <TextBlock Text="{Binding name}"/>
+                        <TextBlock Text="{Binding price}"/>
+                        <TextBlock Text="{Binding quantity}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </DockPanel>
+    <!--<Grid>
         <Label Content="Select Type" FontSize="15"  Margin="638,20,32,307"/>
         <ComboBox Name="cbbtype" Margin="642,55,29,436"/>
         <Label Content="View Product" FontSize="20" Margin="10,10,617,370"></Label>
@@ -31,7 +73,7 @@
             <Label Content="Page 1 of 10"></Label>
             <Button Content="Next" Width="53" Name="btnNext" Click="BtnNext_Click"></Button>
         </StatusBar>
-    </Grid>
+    </Grid>-->
 </Window>
 
    
