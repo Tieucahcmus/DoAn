@@ -49,7 +49,8 @@ namespace DoAn
                 var folder = info.Directory;
                 int sheet_index = 0;
                 var sheet = workbook.Worksheets[sheet_index];
-               
+                int cat_id = 1;
+
                 try
                 {
                     while (sheet != null)
@@ -65,8 +66,7 @@ namespace DoAn
                         {
                             var row = 2;
                             var cell = sheet.Cells[$"B{row}"];
-                            int cat_id = 1;
-                            while (cell.Value != null)
+                            while (cell.StringValue!=null )
                             {
                                 var _catid = cat_id;
                                 var _name = sheet.Cells[$"B{row}"].StringValue;
@@ -85,20 +85,18 @@ namespace DoAn
                                 db.SaveChanges();
                                 row++;
                                 cell = sheet.Cells[$"B{row}"];
-                                cat_id++;
-
-                                Debug.WriteLine("");
+                                Debug.WriteLine(cat_id);
                             }
                         }
                         catch { }
-                        
+                        cat_id++;
                         sheet_index++;
                         sheet = workbook.Worksheets[sheet_index];
                     }
                 }
                 catch (Exception) { }
                 cbbtype.ItemsSource = db.categories.Select(d => d.name).ToList();
-
+                listview_product.ItemsSource= db.products.Select(d => d.name).ToList();
             }
         }
 
