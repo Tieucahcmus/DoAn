@@ -109,7 +109,7 @@ namespace DoAn
                 }
                 catch (Exception) { }
                 cbbtype.ItemsSource = db.categories.Select(d => d.name).ToList();
-                listview_product.ItemsSource= db.products.Select(d => d.name).ToList();
+                listview_product.ItemsSource= db.products.ToList();
             }
         }
 

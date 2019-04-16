@@ -88,6 +88,7 @@
     <Compile Include="product.cs">
       <DependentUpon>storeDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="RelativeToAbsolutePathConverter.cs" />
     <Compile Include="storeDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
