@@ -16,14 +16,12 @@
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <ListView Name="orderListView" Grid.Row="0">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
-                        <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}"/>
-                        <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding Quantity}"/>
-                        <GridViewColumn Header="Total" DisplayMemberBinding="{Binding Total}"/>
-                    </GridView>
-                </ListView.View>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="5" Width="100" Height="100">
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
             <StackPanel Grid.Row="1">
                 <StackPanel Orientation="Horizontal">
@@ -32,6 +30,7 @@
                 </StackPanel>
                 <Button Content="Import" Name="btnImport" Click="BtnImport_Click" Width="100" Height="25"/>
             </StackPanel>
+            <ComboBox HorizontalAlignment="Left" Name="cbb_categories" Width="347" Height="35" Margin="25,125,0,301"  ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
         </Grid>
         <ListView Name="listview_product" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.ItemsPanel>
@@ -41,8 +40,8 @@
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Width="150" Height="150" Background="White">
-                        <Image Source="{Binding img, Converter={StaticResource converter}}" Width="50" Height="50"/>
+                    <StackPanel Width="120" Height="125" Margin="1">
+                        <Image Source="{Binding img, Converter={StaticResource converter}}" Width="80" Height="80"/>
                         <TextBlock Text="{Binding name}"/>
                         <TextBlock Text="{Binding price}"/>
                         <TextBlock Text="{Binding quantity}"/>
